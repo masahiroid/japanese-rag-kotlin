@@ -9,7 +9,7 @@ in-memory vector index, retrieve -> rerank pipeline) plus an Android module that
 Japanese rerankers**: [ruri-v3-30m/130m/310m](https://huggingface.co/masahiroid/ruri-v3-130m-tflite),
 [japanese-reranker-xsmall/small-v2](https://huggingface.co/masahiroid/japanese-reranker-small-v2-tflite),
 [ruri-v3-reranker-310m](https://huggingface.co/masahiroid/ruri-v3-reranker-310m-tflite). No LLM is included: use it to choose the passages you hand to an
-on-device LLM. Counterpart of [japanese-rag-swift](https://github.com/masahirocom/japanese-rag-swift).
+on-device LLM. Counterpart of [japanese-rag-swift](https://github.com/masahiroid/japanese-rag-swift).
 
 | Module | Contents |
 |---|---|
@@ -44,7 +44,7 @@ Requirements: JDK 17+, Gradle 9, Android SDK (for `:litert`; set `sdk.dir` in `l
 
 **Kotlinで書いた、Android / JVM向けのオンデバイス日本語RAG**です。純Kotlinのcore（ruri-v3の**Unigramトークナイザー**、日本語の文チャンク分割、
 メモリ上のベクトル索引、検索→再ランキングのパイプライン）と、ruri-v3と日本語リランカーの**LiteRT（`.tflite`）変換**を動かすAndroidモジュールで構成します。
-LLMは含みません。端末上のLLMに渡す文章を選ぶ部分として使います。[japanese-rag-swift](https://github.com/masahirocom/japanese-rag-swift) のKotlin版です。
+LLMは含みません。端末上のLLMに渡す文章を選ぶ部分として使います。[japanese-rag-swift](https://github.com/masahiroid/japanese-rag-swift) のKotlin版です。
 
 使い方は上の English セクションのコードを参照してください（モデルは各 `masahiroid/*-tflite` リポジトリ）。
 
