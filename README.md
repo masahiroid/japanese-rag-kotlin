@@ -33,9 +33,10 @@ val hits = rag.search("港区にある電波塔", retrieveK = 20, topN = 5)
 (Metaspace, Unigram Viterbi, byte fallback, `<s> ... </s>` template) and **reproduces the Hugging Face ids exactly on 450/450 bundled fixtures** (Japanese prompts, injection texts,
 half/full-width kana, astral kanji, emoji, control characters, pairs for rerankers; `core/src/test`).
 
-**Verified**: `gradle :core:test` (tokenizer fixtures + chunker, index, pipeline tests) passes; `gradle :litert:assembleDebug` builds the AAR
-(AGP 9.4.1, LiteRT 2.2.0, compileSdk 36). **Not yet verified**: running the `.tflite` models inside an Android app / emulator (the same files were verified against PyTorch with the
-LiteRT interpreter in Python), latency and memory on real devices, GPU/NNAPI delegates, a sample app. The fp32 models are large (30m ~150 MB, 130m ~530 MB, 310m ~1.3 GB); quantized variants are future work.
+**Verified**: **on-device run on the Android emulator** (API 36.1, arm64) with the `:sample` app: Kotlin tokenizer -> `ruri-v3-30m_seq128.tflite` -> retrieval ranked 3/3 sample queries correctly (e.g. 「日本で一番高い山は？」 -> the Mt. Fuji passage), and `japanese-reranker-xsmall-v2_seq256.tflite` ranked the Tokyo Tower passage first (~100-140 ms per query on the emulator CPU; **not** a real-device figure). `gradle :core:test` (tokenizer fixtures + chunker, index, pipeline tests) passes; `gradle :litert:assembleDebug` builds the AAR
+(AGP 9.4.1, LiteRT 2.2.0, compileSdk 36). **Not yet verified**: latency and memory on real devices, GPU/NNAPI delegates, a richer sample UI. The fp32 models are large (30m ~150 MB, 130m ~530 MB, 310m ~1.3 GB); quantized variants are future work.
+
+**Run the sample**: `gradle :sample:assembleDebug`, install the APK, then `adb push ruri-v3-30m_seq128.tflite` (and optionally `japanese-reranker-xsmall-v2_seq256.tflite`) to `/sdcard/Android/data/jp.masahirocom.ragkit.sample/files/`, launch the app and read logcat tag `RAGSAMPLE`. (`gradle.properties` sets `android.uniquePackageNames=false` because LiteRT's `litert` and `litert-api` AARs share a namespace, which AGP 9 otherwise rejects.)
 
 Requirements: JDK 17+, Gradle 9, Android SDK (for `:litert`; set `sdk.dir` in `local.properties`). License: Apache-2.0 (matching ruri-v3).
 
@@ -51,8 +52,7 @@ LLMは含みません。端末上のLLMに渡す文章を選ぶ部分として�
 ruri-v3のパイプライン（Metaspace、UnigramのViterbi、バイトフォールバック、`<s> ... </s>`）を実装し、同梱の450件のフィクスチャ（日本語の指示文・注入文、
 半角・全角カナ、補助平面の漢字、絵文字、制御文字、リランカー用のペア）で、**Hugging Faceと同一のIDを完全に再現**します（`core/src/test`）。
 
-**検証済み**: `gradle :core:test`（トークナイザー、チャンク、索引、パイプライン）が通り、`gradle :litert:assembleDebug` でAARがビルドできます
-（AGP 9.4.1、LiteRT 2.2.0、compileSdk 36）。**未検証**: Androidアプリ／エミュレータ内での `.tflite` の実行（同じファイルはPythonのLiteRTインタプリタでPyTorchと照合済み）、
-実機のレイテンシとメモリ、GPU／NNAPIデリゲート、サンプルアプリ。fp32モデルは大きいです（30m 約150MB、130m 約530MB、310m 約1.3GB）。量子化版は今後の課題です。
+**検証済み**: **Androidエミュレータ（API 36.1、arm64）での端末上実行**。`:sample` アプリで、Kotlinのトークナイザー → `ruri-v3-30m_seq128.tflite` → 検索が3つのサンプルクエリを全て正しく順位付け（例: 「日本で一番高い山は？」→ 富士山の文章が1位）、`japanese-reranker-xsmall-v2_seq256.tflite` が東京タワーの文章を1位にしました（エミュレータのCPUで1クエリ約100〜140ms。**実機の値ではありません**）。`gradle :core:test`（トークナイザー、チャンク、索引、パイプライン）が通り、`gradle :litert:assembleDebug` でAARがビルドできます
+（AGP 9.4.1、LiteRT 2.2.0、compileSdk 36）。**未検証**: 実機のレイテンシとメモリ、GPU／NNAPIデリゲート、リッチなサンプルUI。fp32モデルは大きいです（30m 約150MB、130m 約530MB、310m 約1.3GB）。量子化版は今後の課題です。
 
 要件: JDK 17+、Gradle 9、Android SDK（`:litert` 用。`local.properties` に `sdk.dir`）。ライセンス: Apache-2.0（ruri-v3に合わせています）。
