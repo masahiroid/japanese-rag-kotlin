@@ -1,0 +1,27 @@
+{
+  "title": "japanese-rag-kotlin",
+  "upload_type": "software",
+  "description": "On-device Japanese retrieval-augmented generation for Android and JVM in Kotlin: a pure-Kotlin core (ruri-v3 Unigram tokenizer that matches Hugging Face output, Japanese sentence chunker, in-memory vector index, retrieve-then-rerank pipeline) and an Android module running LiteRT conversions of ruri-v3 and Japanese rerankers.",
+  "creators": [
+    {
+      "name": "Nakatsugawa, Masahiro",
+      "orcid": "0009-0000-3224-0103"
+    }
+  ],
+  "license": "apache-2.0",
+  "keywords": [
+    "rag",
+    "japanese",
+    "kotlin",
+    "android",
+    "litert",
+    "on-device"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/masahiroid/japanese-rag-kotlin",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
