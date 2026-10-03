@@ -13,6 +13,7 @@ abstract: >-
   running LiteRT conversions of ruri-v3 and Japanese rerankers.
 repository-code: "https://github.com/masahiroid/japanese-rag-kotlin"
 license: Apache-2.0
+doi: 10.5281/zenodo.23122937
 keywords:
   - rag
   - japanese

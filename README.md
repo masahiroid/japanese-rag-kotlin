@@ -1,5 +1,7 @@
 # japanese-rag-kotlin
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23122937.svg)](https://doi.org/10.5281/zenodo.23122937)
+
 [English](#english) | [日本語](#日本語)
 
 ## English
